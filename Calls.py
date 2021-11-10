@@ -1,6 +1,5 @@
 import csv
 
-
 class calls:
     def __init__(self, elevator_call="", time=0, source=0, destination=0, status=0, elevator=0) -> None:
         self.elevator_call = elevator_call
