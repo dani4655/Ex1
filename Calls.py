@@ -2,9 +2,10 @@ import csv
 
 class calls:
     def __init__(self, file_name):
-        with open(file_name) as f:
-            csv_read= csv.reader(f)
-            print(csv_read)
+       pass
+
+
+
     # def __init__(self, elevator_call="", time=0, source=0, destination=0, status=0, elevator=0) -> None:
     #     self.elevator_call = elevator_call
     #     self.time = time
