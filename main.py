@@ -1,9 +1,21 @@
 import json
 import csv
+<<<<<<<<< Temporary merge branch 1
 import Calls
 
-# from Ex1.Elevator import Elevator
-# import pandas
+from Ex1.Elevator import Elevator
+
+if __name__ == '__main__':
+    pass
+"""
+this function calculate the time it will take to the elevator to go from source floor to dest not including any stops in the way
+"""
+def time(source: int, dest: int, eleveator: Elevator):
+    return (abs(dest - source)) / eleveator._speed + eleveator._openTime + eleveator._closeTime + eleveator._startTime + eleveator._stopTime
+
+=========
+
+import pandas
 
 from Elevator import Elevator
 from Building import Building
@@ -45,3 +57,6 @@ if __name__ == '__main__':
                 ele.goto(c)
 
 
+def timeAll(calls:[]):
+    for i in calls:
+        calls[i]
