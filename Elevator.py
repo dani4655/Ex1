@@ -2,22 +2,24 @@ import Building
 import json
 
 
-# class Elevator:
-#      def _init_(self, id:int):
-#     #     with open(file_name, "r") as f:
-#     #         dict = json.load(f)
-#     #         dic_list = []
-#             self._minFloor = int(dict['_minFloor'])
-#             self._maxFloor = int(dict['_maxFloor'])
-#             self._speed = float(dict['_speed'])
-#             self._closeTime = float(dict['_closeTime'])
-#             self._openTime = float(dict['_openTime'])
-#             self._startTime = float(dict['_startTime'])
-#             self._stopTime = float(dict['_stopTime'])
+class Elevator:
+    def __init__(self, id, speed, minFloor, maxFloor, closeTime, openTime, startTime,stopTime):
+        self._minFloor = minFloor
+        self._maxFloor = maxFloor
+        self._speed = speed
+        self._closeTime = closeTime
+        self._openTime = openTime
+        self._startTime = startTime
+        self._stopTime = stopTime
+        self.status = 0  # UP = 1, Down = -1, RestMode = 0
 
-    #
-    # def add_calls(self, id: int, floor: int, arriving: float):
-    #     call_dictionary = {"id": id,
-    #                        "floor": floor,
-    #                        "arriving": arriving}
-    #     self.list.append(call_dictionary)
+    def setstatus(self,i:int)->int:
+        self.status = i
+        return self.status
+
+#
+# def add_calls(self, id: int, floor: int, arriving: float):
+#     call_dictionary = {"id": id,
+#                        "floor": floor,
+#                        "arriving": arriving}
+#     self.list.append(call_dictionary)
