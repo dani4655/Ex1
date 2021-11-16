@@ -8,13 +8,12 @@ class Building:
             dict = json.load(f)
             self._minFloor = int(dict["_minFloor"])
             self._maxFloor = int(dict['_maxFloor'])
-            # self._elevators=[](dict['_elevators'])
-            self._elevators = []
+            self.elevators = []
             self.status = int
             for k in dict['_elevators']:
                 ele = Elevator(id=k["_id"], speed=k["_speed"], minFloor=k["_minFloor"], maxFloor=k["_maxFloor"],
                                closeTime=k["_closeTime"], openTime=k["_openTime"], startTime=k["_startTime"], stopTime=k["_stopTime"])
-                self._elevators.append(ele)
+                self.elevators.append(ele)
             # self.list = Elevator.dict_list
 
 

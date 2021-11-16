@@ -3,7 +3,7 @@ import json
 
 
 class Elevator:
-    def __init__(self, id, speed, minFloor, maxFloor, closeTime, openTime, startTime,stopTime):
+    def __init__(self, id, speed, minFloor, maxFloor, closeTime, openTime, startTime, stopTime):
         self._minFloor = minFloor
         self._maxFloor = maxFloor
         self._speed = speed
@@ -12,10 +12,17 @@ class Elevator:
         self._startTime = startTime
         self._stopTime = stopTime
         self.status = 0  # UP = 1, Down = -1, RestMode = 0
+        self.position = 0
+        self.call_listUP = []
+        self.call_listDOWN = []
+        self.temp_call_listUP = []
+        self.temp_call_listDOWN = []
 
-    def setstatus(self,i:int)->int:
+    def setstatus(self, i: int) -> None:
         self.status = i
-        return self.status
+
+    def setposition(self, i: int) -> None:
+        self.position = i
 
 #
 # def add_calls(self, id: int, floor: int, arriving: float):

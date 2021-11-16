@@ -1,15 +1,18 @@
 import json
 import csv
+
+import pandas as pd
+
 import Calls
 
-from Elevator import Elevator
+# from Elevator import Elevator
 import pandas
 from Building import Building
-from Calls import calls
+from Calls import Calls
 
 
 def direction(id: int):
-    call = calls(id)
+    call = Calls(id)
     x = call.destination - call.source
     if x < 0:
         return -1  # DOWN
@@ -18,7 +21,7 @@ def direction(id: int):
 
 # check all calls
 # UP = 1, DOWN = -1, equals = 0
-def up_or_down(call: calls):
+def up_or_down(call: Calls):
     up = 0
     down = 0
     for i in call:
@@ -33,13 +36,34 @@ def up_or_down(call: calls):
     return 0
 
 
-if __name__ == '__main__':
-    numOfEle = len(Building['_elevators'])
-    elevators = [numOfEle]
-    for j in calls:
-        c = calls(j)
-        if numOfEle == 1:  # one elevator
-            ele = Building['_elevators'][0]
-            if direction(0) == 1:
-                ele.goto(c)
+# def time_to_arrive(call: calls, ele: int):
+#     elev = Building['_elevators'][ele]
+#     e = Building.list[ele]
+#     if len(Elevator.list) > 0:
+#         elev
+#     dist = abs(e['floor'])  #need to get the distance from floor a to floor b
+#     a_to_b= elev._closeTime+ elev._openTime + elev._startTime + elev._stopTime +
 
+if __name__ == '__main__':
+    # numOfEle = len(Building['_elevators'])
+    # elevators = [numOfEle]
+    # for j in len(calls.r):
+    #     c = calls.r[j]
+    #     if numOfEle == 1:  # one elevator
+    #         ele = Building['_elevators'][0]
+    #         if direction(0) == 1:
+    #             ele.goto(c)
+    # pd.read_json("B5.json")
+    b = Building("B5.json")
+    # b.add_calls(0,1,123124)
+    # b.add_calls(0, 6, 235623)
+    ele = b
+    b.elevators[0].status = 1351
+    print(b.elevators[0].status)
+    c = Calls(0)
+    numOfEle = len(b.elevators)
+    ans = None
+    if 1 < 0:
+        ans = 5
+    if ans != None:
+        print(5)
