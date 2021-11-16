@@ -18,7 +18,7 @@ class Elevator:
         self.temp_call_listUP = []
         self.temp_call_listDOWN = []
         self.delay = self._stopTime + self._startTime + self._openTime + self._closeTime
-        self.goto = 0
+        self.goto = 0 #counts the seconds since the elevator started to move
 
     def set_status(self, i: int) -> None:
         self.status = i
