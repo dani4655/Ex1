@@ -31,25 +31,26 @@ class Elevator:
     """
 
     def set_position(self) -> None:
-        if self.status == 0:
-            if self.goto < self._startTime:
+        if self.direction() == 1 or self.direction() == -1:
+            if self.status == 0:
+                if self.goto < self._startTime:
+                    pass
+                else:
+                    t = ((self.goto - self._startTime) * self._speed)
+                    self.position += t
+
+            if self.goto < self.delay:
                 pass
             else:
-                t = ((self.goto - self._startTime) * self._speed)
-                self.position += t
-
-        if self.goto < self.delay:
-            pass
-        else:
-            t = ((self.goto - self.delay) * self._speed)
-            t *= self.status
-            toInt = int(t)
-            self.position += toInt
-        if self.position > self._maxFloor:
-            self.position = self._maxFloor
-        if self.position < self._minFloor:
-            self.position = self._minFloor
-        self.goto += 1
+                t = ((self.goto - self.delay) * self._speed)
+                t *= self.status
+                toInt = int(t)
+                self.position += toInt
+            if self.position > self._maxFloor:
+                self.position = self._maxFloor
+            if self.position < self._minFloor:
+                self.position = self._minFloor
+            self.goto += 1
 
     def direction(self):
         if self.status == 1:
