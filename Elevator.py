@@ -18,6 +18,7 @@ class Elevator:
         self.temp_call_listUP = []
         self.temp_call_listDOWN = []
         self.delay = self._stopTime + self._startTime + self._openTime + self._closeTime
+        self.goto = 0
 
     def set_status(self, i: int) -> None:
         self.status = i
@@ -28,24 +29,40 @@ class Elevator:
      and it calculate where is the elevator 
     :param time
     """
-    def set_position(self, time: int) -> None:
+
+    def set_position(self) -> None:
         if self.status == 0:
-            if time < self._startTime:
+            if self.goto < self._startTime:
                 pass
             else:
-                t = ((time - self._startTime) * self._speed)
+                t = ((self.goto - self._startTime) * self._speed)
                 self.position += t
 
-        if time < self.delay:
+        if self.goto < self.delay:
             pass
         else:
-            t=((time-self.delay)*self._speed)
-            t*=self.status
+            t = ((self.goto - self.delay) * self._speed)
+            t *= self.status
             toInt = int(t)
             self.position += toInt
+        if self.position > self._maxFloor:
+            self.position = self._maxFloor
+        if self.position < self._minFloor:
+            self.position = self._minFloor
+        self.goto += 1
 
-
-
+    def direction(self):
+        if self.status == 1:
+            if len(self.call_listUP) == 0:
+                self.status = 0
+        if self.status == -1:
+            if len(self.call_listDOWN) == 0:
+                self.status = 0
+        if self.status == 0:
+            if len(self.call_listUP) > 0:
+                self.status = 1
+            elif len(self.call_listDOWN) > 0:
+                self.status = -1
 
 #
 # def add_calls(self, id: int, floor: int, arriving: float):
