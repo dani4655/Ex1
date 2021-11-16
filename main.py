@@ -7,6 +7,8 @@ import Calls
 
 # from Elevator import Elevator
 import pandas
+
+import Output
 from Building import Building
 from Calls import Calls
 
@@ -57,13 +59,9 @@ if __name__ == '__main__':
     b = Building("B5.json")
     # b.add_calls(0,1,123124)
     # b.add_calls(0, 6, 235623)
-    ele = b
+    ele = b.elevators[0]
     b.elevators[0].status = 1351
     print(b.elevators[0].status)
     c = Calls(0)
     numOfEle = len(b.elevators)
-    ans = None
-    if 1 < 0:
-        ans = 5
-    if ans != None:
-        print(5)
+    Output.output(8)
