@@ -1,3 +1,4 @@
+from Output import Output
 from Elevator import Elevator
 from Calls import Calls
 from Building import Building
@@ -7,25 +8,29 @@ class Simulator:
     b = Building("B5.json")
 
     def time(self, e: b.elevators, list: [], call: Calls):
-        if len(list) == 0:
-            return abs(call.source - e.position) / e.delay
-        t = abs(e.position - int(list[0])) / e._speed + e.delay
-        if e.direction == 1:
-            for i in range(0, len(list) - 1):
-                t += abs(list[i] - list[i + 1]) / e._speed + e.delay
-            if len(e.temp_call_listUP) > 0:
-                for i in range(0, e.temp_call_listUP - 1):
-                    t += abs(e.temp_call_listUP[i] - e.temp_call_listUP[
-                        i + 1]) / e._speed + e.delay
-        if e.direction == -1:
-            for i in range(0, list - 1):
-                if list[i] < call.source:
-                    break
-                t += abs(list[i] - list[i + 1]) / e._speed + e.delay
+        if len(list) == 0:  # if no calls
+            return abs(int(call.source) - int(e.position)) + e.delay
+        t = 0
+        if e.direction == 1:  # if elevator on the move - UP
+            for i in range(len(list)-1):  # main list
+                if list[i+1] < call.source:
+                    t += abs(int(list[i]) - int(list[i + 1])) / e._speed + e.delay
+                if list[i + 1] > call.source:
+                    t += abs(int(list[i]) - int(call.source)) / e._speed + e.delay
+            if len(e.temp_call_listUP) > 0:  # check temp list
+                for i in range(len(e.temp_call_listUP) - 1):
+                    t += abs(int(e.temp_call_listUP[i]) - int(e.temp_call_listUP[
+                        i + 1])) / e._speed + e.delay
+        if e.direction == -1:  # if elevator on the move - DOWN
+            for i in range(len(list)-1):  # main list
+                if list[i + 1] > call.source:
+                    t += abs(list[i] - list[i + 1]) / e._speed + e.delay
+                if list[i + 1] < call.source:
+                    t += abs(int(list[i]) - int(call.source)) / e._speed + e.delay
             if len(e.temp_call_listDOWN) > 0:
-                for i in range(0, e.temp_call_listDOWN - 1):
-                    t += abs(e.temp_call_listDOWN[i] - e.temp_call_listDOWN[
-                        i + 1]) / e._speed + e.delay
+                for i in range(len(e.temp_call_listDOWN) - 1):  # check temp list
+                    t += abs(int(e.temp_call_listDOWN[i]) - int(e.temp_call_listDOWN[
+                        i + 1])) / e._speed + e.delay
         return t
 
     def one_ele(self, c: Calls):
@@ -48,14 +53,15 @@ class Simulator:
                 ele.call_listUP.append(c.destination)
                 ele.call_listUP.sort()
                 ele.calls_l.append(c)
-            ele.call_listDOWN.append(c.source)
-            ele.call_listDOWN.append(c.destination)
-            ele.temp_call_listDOWN.sort()
-            ele.temp_call_listDOWN.reverse()
-            ele.calls_l.append(c)
+            else:
+                ele.call_listDOWN.append(c.source)
+                ele.call_listDOWN.append(c.destination)
+                ele.call_listDOWN.sort()
+                ele.call_listDOWN.reverse()
+                ele.calls_l.append(c)
 
     def addUP(self, c: Calls, ele: Elevator):
-        if len(ele.call_listUP) > 0 and ele.call_listUP[0]:
+        if ele.call_listUP.size > 0 and ele.call_listUP[0]:
             ele.temp_call_listUP.append(c.source)
             ele.temp_call_listUP.append(c.destination)
             ele.temp_call_listUP.sort()
@@ -63,11 +69,11 @@ class Simulator:
         else:
             ele.call_listUP.append(c.source)
             ele.call_listUP.append(c.destination)
-            ele.temp_call_listUP.sort()
+            ele.call_listUP.sort()
             ele.calls_l.append(c)
 
     def addDOWN(self, c: Calls, ele: Elevator):
-        if len(ele.call_listDOWN) > 0 and ele.call_listDOWN[0]:
+        if ele.call_listDOWN.size > 0 and ele.call_listDOWN[0]:
             ele.temp_call_listDOWN.append(c.source)
             ele.temp_call_listDOWN.append(c.destination)
             ele.temp_call_listDOWN.sort()
@@ -77,20 +83,41 @@ class Simulator:
         else:
             ele.call_listDOWN.append(c.source)
             ele.call_listDOWN.append(c.destination)
-            ele.call_listDOWN.sort(reverse=True)
+            ele.call_listDOWN.sort()
+            ele.call_listDOWN.reverse()
             ele.calls_l.append(c)
+
+    def arr_move_up(self, ele: Elevator):
+        while ele.temp_call_listUP != 0:
+            ele.call_listUP.append(ele.temp_call_listUP[0])
+            ele.temp_call_listUP.remove(0)
+        ele.call_listUP.sort()
+
+
+    def arr_move_down(self, ele: Elevator):
+        while ele.temp_call_listDOWN != 0:
+            ele.call_listDOWN.append(ele.temp_call_listDOWN[0])
+            ele.temp_call_listDOWN.remove(0)
+        ele.call_listDOWN.sort()
+        ele.call_listDOWN.reverse()
 
     def pos(self, num: int):
         for i in range(num):
-            self.b.elevators[i].set_position()
-            self.start_call(self.b.elevators[i])
-            self.write_call(self.b.elevators[i])
+            ele = self.b.elevators[i]
+            if len(ele.call_listDOWN) == 0 and len(ele.temp_call_listDOWN) > 0:
+                self.arr_move_down(ele)
+            if len(ele.call_listUP) == 0 and len(ele.temp_call_listUP) > 0:
+                self.arr_move_up(ele)
+            ele.set_position()
+            self.start_call(ele)
+            self.write_call(ele)
 
     def start_call(self, ele: Elevator):
         if len(ele.calls_l) > 0:
             c = ele.calls_l[0]
             if ele.position == c.source:
                 c.status = 2
+
 
     def write_call(self, ele: Elevator):
         if len(ele.calls_l) > 0:
@@ -100,6 +127,7 @@ class Simulator:
                 c.elevator = ele.eleid
                 Output(c.callID)
                 ele.calls_l.remove(0)
+
 
     def sim(self):
         numOfEle = len(self.b.elevators)
@@ -147,7 +175,6 @@ class Simulator:
                                 p = self.time(ele, ele.call_listDOWN.append, c)
                                 ans = ele
                     if ans != None:
-                        ele.set_direction()
                         self.add(c, ans)
-
+                        ele.set_direction()
                 i += 1

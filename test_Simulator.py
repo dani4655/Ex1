@@ -5,8 +5,8 @@ from Calls import Calls
 from Simulator import Simulator
 
 b = Building("B5.json")
-c = Calls(0)
-c2 = Calls(4)
+c = Calls(27)
+c2 = Calls(15)
 ele = b.elevators[0]
 
 
@@ -16,7 +16,9 @@ class Test(TestCase):
         Simulator.add(self, c2, ele)
         print("down: ", ele.call_listDOWN)
         print("up", ele.call_listUP)
-        t = Simulator.time(self, ele, ele.call_listDOWN, c)
+        print(ele.direction)
+        ele.direction = 1
+        t = Simulator.time(self, ele, ele.call_listUP, c)
         print(t)
 
     def test_one_ele(self):
