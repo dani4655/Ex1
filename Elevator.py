@@ -1,5 +1,5 @@
-import Building
-import json
+#import Building
+#import json
 
 
 class Elevator:
@@ -23,8 +23,8 @@ class Elevator:
         self.delay = self._stopTime + self._startTime + self._openTime + self._closeTime
         self.goto = 0  # counts the seconds since the elevator started to move
 
-    def set_direction(self, i: int) -> None:
-        self.direction = i
+    # def set_direction(self, i: int) -> None:
+    #     self.direction = i
 
     """
      this function gets integer that 
@@ -34,7 +34,7 @@ class Elevator:
     """
 
     def set_position(self) -> None:
-        if self.direction() == 1 or self.direction() == -1:
+        if self.direction == 1 or self.direction == -1:
             if self.direction == 0:
                 if self.goto < self._startTime:
                     pass
