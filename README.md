@@ -4,6 +4,7 @@
 /cup-geek-pro-elevator-https://www.geeksforgeeks.org/smart
 elevator-an-for-algorithm-service-the-optimize-to-ways-are-https://www.quora.com/What
 http://www.columbia.edu/~cs2035/courses/ieor4405.S13/p14.pdf
+https://studylib.net/doc/7878746/on-line-algorithms-versus-off-line-algorithms-for-the-ele...
 
 2. The algorithem will work mainly on times, to decide which elevator will be assigned to a call we will check varies of things
 to optimize avrerage time and to complete many calls as we can.
