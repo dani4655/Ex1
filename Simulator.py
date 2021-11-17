@@ -1,3 +1,4 @@
+from Output import Output
 from Elevator import Elevator
 from Calls import Calls
 from Building import Building
@@ -10,14 +11,14 @@ class Simulator:
         if list.size == 0:
             return e._speed * abs(call.source - e.position) + e._openTime + e._closeTime + e._startTime + e._stopTime
         t = e._speed * abs(e.position - list[0]) + e._openTime + e._closeTime + e._startTime + e._stopTime
-        if e.status == 1:
+        if e.direction == 1:
             for i in range(0, list.size - 1):
                 t += e._speed * abs(list[i] - list[i + 1]) + e._openTime + e._closeTime + e._startTime + e._stopTime
             if e.temp_call_listUP.size > 0:
                 for i in range(0, e.temp_call_listUP - 1):
                     t += e._speed * abs(e.temp_call_listUP[i] - e.temp_call_listUP[
                         i + 1]) + e._openTime + e._closeTime + e._startTime + e._stopTime
-        if e.status == -1:
+        if e.direction == -1:
             for i in range(0, list - 1):
                 if list[i] < call.source:
                     break
@@ -30,19 +31,19 @@ class Simulator:
 
     def one_ele(self, c: Calls):
         ele = self.b.elevators[0]
-        if ele.status == 0:  # RESTMODE
+        if ele.direction == 0:  # RESTMODE
             self.add(c, ele)
-        if ele.status == 1:  # UP
+        if ele.direction == 1:  # UP
             self.add(c, ele)
-        if ele.status == -1:  # DOWN
+        if ele.direction == -1:  # DOWN
             self.add(c, ele)
 
     def add(self, c: Calls, ele: Elevator):
-        if ele.status == 1:  # UP
+        if ele.direction == 1:  # UP
             self.addUP(c, ele)
-        elif ele.status == -1:  # DOWN
+        elif ele.direction == -1:  # DOWN
             self.addDOWN(c, ele)
-        elif ele.status == 0:
+        elif ele.direction == 0:
             if c.direction == 1:
                 ele.call_listUP.append(c.source)
                 ele.call_listUP.append(c.destination)
@@ -81,6 +82,25 @@ class Simulator:
     def pos(self, num: int):
         for i in range(num):
             self.b.elevators[i].set_position()
+            self.start_call(self.b.elevators[i])
+            self.write_call(self.b.elevators[i])
+
+    def start_call(self, ele: Elevator):
+        if len(ele.calls_l) > 0:
+            c = ele.calls_l[0]
+            if ele.position == c.source:
+                c.status = 2
+
+
+    def write_call(self, ele: Elevator):
+        if len(ele.calls_l) > 0:
+            c = ele.calls_l[0]
+            if c.status == 2 and c.destination == ele.position:
+                c.status = 3
+                c.elevator = ele.eleid
+                Output(c.callID)
+                ele.calls_l.remove(0)
+
 
     def sim(self):
         numOfEle = len(self.b.elevators)
@@ -103,31 +123,31 @@ class Simulator:
                 for e in range(numOfEle):  # Elevators
                     ele = self.b.elevators[e]
                     if t >= c.time:
-                        if ele.status == 0 and ele.position == c.source:  # elev at the call floor and "rest mode"
+                        if ele.direction == 0 and ele.position == c.source:  # elev at the call floor and "rest mode"
                             self.add(c, ele)
-                            ele.direction()
+                            ele.set_direction()
                             break
-                        if ele.status == 1 and ele.position == c.source:  # elev at the call floor and UP
+                        if ele.direction == 1 and ele.position == c.source:  # elev at the call floor and UP
                             self.add(c, ele)
-                            ele.direction()
+                            ele.set_direction()
                             break
-                        if ele.status == -1 and ele.position == c.source:  # elev at the call floor and DOWN
+                        if ele.direction == -1 and ele.position == c.source:  # elev at the call floor and DOWN
                             self.add(c, ele)
-                            ele.direction()
+                            ele.set_direction()
                             break
-                        if ele.status == 1:  # UP
+                        if ele.direction == 1:  # UP
                             if self.time(ele, ele.call_listUP.append, c) < p:
                                 p = self.time(ele, ele.call_listUP.append, c)
                                 ans = ele
-                        if ele.status == -1:  # DOWN
+                        if ele.direction == -1:  # DOWN
                             if self.time(ele, ele.call_listDOWN.append, c) < p:
                                 p = self.time(ele, ele.call_listDOWN.append, c)
                                 ans = ele
-                        if ele.status == 0:  # REST MODE
+                        if ele.direction == 0:  # REST MODE
                             if self.time(ele, ele.call_listDOWN.append, c) < p:
                                 p = self.time(ele, ele.call_listDOWN.append, c)
                                 ans = ele
                     if ans != None:
                         self.add(c, ans)
-                        ele.direction()
+                        ele.set_direction()
                 i += 1

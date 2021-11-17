@@ -1,4 +1,5 @@
 import csv
+from Elevator import Elevator
 
 
 class Calls:
@@ -24,6 +25,7 @@ class Calls:
         if x < 0:
             self.direction = -1  # DOWN
         self.direction = 1  # UP
+
 
     # def __str__(self) -> str:
     #     return f"Elevator_call: {self.elevator_call} time: {self.time} Source: {self.source} Destination: {self.destination} Status: {self.status} Elevator: {self.elevator}"

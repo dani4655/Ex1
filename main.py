@@ -60,8 +60,6 @@ if __name__ == '__main__':
     # b.add_calls(0,1,123124)
     # b.add_calls(0, 6, 235623)
     ele = b.elevators[0]
-    b.elevators[0].status = 1351
-    print(b.elevators[0].status)
     c = Calls(0)
     numOfEle = len(b.elevators)
     Output.output(6)
