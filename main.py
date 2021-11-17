@@ -64,4 +64,4 @@ if __name__ == '__main__':
     print(b.elevators[0].status)
     c = Calls(0)
     numOfEle = len(b.elevators)
-    Output.output(8)
+    Output.output(6)

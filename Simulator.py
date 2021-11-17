@@ -47,30 +47,36 @@ class Simulator:
                 ele.call_listUP.append(c.source)
                 ele.call_listUP.append(c.destination)
                 ele.call_listUP.sort()
+                ele.calls_l.append(c)
             ele.call_listDOWN.append(c.source)
             ele.call_listDOWN.append(c.destination)
             ele.call_listDOWN.sort(reverse=True)
+            ele.calls_l.append(c)
 
     def addUP(self, c: Calls, ele: Elevator):
         if ele.call_listUP.size > 0 and ele.call_listUP[0]:
             ele.temp_call_listUP.append(c.source)
             ele.temp_call_listUP.append(c.destination)
             ele.temp_call_listUP.sort()
+            ele.calls_l.append(c)
         else:
             ele.call_listUP.append(c.source)
             ele.call_listUP.append(c.destination)
             ele.temp_call_listUP.sort()
+            ele.calls_l.append(c)
 
     def addDOWN(self, c: Calls, ele: Elevator):
         if ele.call_listDOWN.size > 0 and ele.call_listDOWN[0]:
             ele.temp_call_listDOWN.append(c.source)
             ele.temp_call_listDOWN.append(c.destination)
             ele.temp_call_listDOWN.sort(reverse=True)
+            ele.calls_l.append(c)
 
         else:
             ele.call_listDOWN.append(c.source)
             ele.call_listDOWN.append(c.destination)
             ele.call_listDOWN.sort(reverse=True)
+            ele.calls_l.append(c)
 
     def pos(self, num: int):
         for i in range(num):
@@ -82,6 +88,7 @@ class Simulator:
         i = 0
         ans = None
         for t in range(int(calls_time)):  # TIME
+
             self.pos(numOfEle)  # set elevators position
             for j in Calls:  # Calls
                 c = Calls(i)

@@ -17,6 +17,7 @@ class Elevator:
         self.call_listDOWN = []
         self.temp_call_listUP = []
         self.temp_call_listDOWN = []
+        self.calls_l = []
         self.delay = self._stopTime + self._startTime + self._openTime + self._closeTime
         self.goto = 0
 
