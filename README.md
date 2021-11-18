@@ -25,3 +25,6 @@ With this information, a faster elevators will take more calls and harder calls 
 we can check if our classes fields are similar to the fields we defined.
 we can check if our time function works good by calculating times and see if the output is same as we calculated. <br>
 Also we will create new buildings with easy situations to calculate and then we will see in the unitest if our calculations are same like the simulator results.
+
+An example for output taken from the google sheets:<br>
+315314609	206760290<br>		B1	a	112.92	0	-250296179	Code Owners,315314609,206760290,  Building_file,B1.json,  Calls,Calls_.csv Total waiting time: 11292.0,  average waiting time per call: 112.92,  unCompleted calls,0,  certificate, -250296179	https://drive.google.com/open?id=1Mbkl17BOGxzdB_FudFR6i8tb2cKCvD8N			
