@@ -18,9 +18,10 @@ With this information, a faster elevators will take more calls and harder calls 
 
 
 <b>UML Of The Project </b> <br>
-3. diagram:<br>![image](https://user-images.githubusercontent.com/75334138/141819802-ecdafdc1-78ec-451e-959c-f86e764e8291.png)
+3. diagram:<br>![image](https://user-images.githubusercontent.com/75334138/142442804-232330ac-fb43-4a14-a7ab-89f65418c79c.png)
 
 <b>Tests That We Did In This Project </b><br>
 4. we can use unitest to check our code and to see if it clean from bugs.
 we can check if our classes fields are similar to the fields we defined.
-we can check if our time function works good by calculating times and see if the output is same as we calculated
+we can check if our time function works good by calculating times and see if the output is same as we calculated. <br>
+Also we will create new buildings with easy situations to calculate and then we will see in the unitest if our calculations are same like the simulator results.
