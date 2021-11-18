@@ -4,14 +4,14 @@ from Calls import Calls
 from Building import Building
 from Elevator import Elevator
 
+
 class Output:
-    def __init__(self, callID) -> None:
-        b = Building("B5.json")
-        f = open("Calls_.csv", 'a', newline='')
-        data = ['Done', 'dt']
-        time = 0
+    def __init__(self, file_name, x, callID, callname) -> None:
+        f = open(file_name, 'a', newline='')
         csv_writer = csv.writer(f)
-        csv_writer.writerow(Calls(callID).r[callID])
+        row = Calls(callname,callID).r[callID]
+        row[5] = x
+        csv_writer.writerow(row)
         f.close()
         # with open("Calls_.csv") as myFile:
         #     lines = myFile.readlines()

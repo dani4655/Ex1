@@ -1,8 +1,13 @@
-#import Building
-#import json
+# import Building
+# import json
+import math
+
+from Calls import Calls
 
 
 class Elevator:
+    time = 0
+
     def __init__(self, id, speed, minFloor, maxFloor, closeTime, openTime, startTime, stopTime):
         self.eleid = id
         self._minFloor = minFloor
@@ -15,13 +20,25 @@ class Elevator:
         self.status = 0  # unpicked = 1, PickUp = 2, Done = 3
         self.position = 0
         self.direction = 0  # UP = 1, Down = -1, RestMode = 0
-        self.call_listUP = []
-        self.call_listDOWN = []
-        self.temp_call_listUP = []
-        self.temp_call_listDOWN = []
-        self.calls_l = []
+        # self.call_listUP = []
+        # self.call_listDOWN = []
+        # self.temp_call_listUP = []
+        # self.temp_call_listDOWN = []
+        # self.calls_l = []
         self.delay = self._stopTime + self._startTime + self._openTime + self._closeTime
         self.goto = 0  # counts the seconds since the elevator started to move
+        self.time_from_call = 0
+        self.time_to_finish = int(0)
+        self.elecalls = 0
+
+
+    # def set_elecalls(self, endtime: float):
+    #     self.elecalls += endtime
+
+
+    def time_travel(self, c: Calls):
+        df = abs(int(c.destination) - int(c.source))
+        return self.delay + df / self._speed
 
     # def set_direction(self, i: int) -> None:
     #     self.direction = i
@@ -33,27 +50,12 @@ class Elevator:
     :param time
     """
 
-    def set_position(self) -> None:
-        if self.direction == 1 or self.direction == -1:
-            if self.direction == 0:
-                if self.goto < self._startTime:
-                    pass
-                else:
-                    t = ((self.goto - self._startTime) * self._speed)
-                    self.position += t
-
-            if self.goto < self.delay:
-                pass
-            else:
-                t = ((self.goto - self.delay) * self._speed)
-                t *= self.direction
-                toInt = int(t)
-                self.position += toInt
-            if self.position > self._maxFloor:
-                self.position = self._maxFloor
-            if self.position < self._minFloor:
-                self.position = self._minFloor
-            self.goto += 1
+    # def set_position(self) -> None:
+    #
+    #         # if self.position > self._maxFloor:
+    #         #     self.position = self._maxFloor
+    #         # if self.position < self._minFloor:
+    #         #     self.position = self._minFloor
 
     def set_direction(self):
         if self.direction == 1:

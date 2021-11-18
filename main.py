@@ -1,62 +1,41 @@
-
-import json
-import csv
-
-import pandas as pd
-
-# from Elevator import Elevator
-import pandas
-
-import Output
 from Building import Building
 from Calls import Calls
-from Simulator import Simulator
+from Elevator import Elevator
+from Output import Output
 
+b = Building("B5.json")
+def calls():
+    for i in range(Calls(0).length):
+        c = Calls(i)
+        t = b.elevators[2].time_travel(Calls(2))
+        eleid = 0
+        index = 0
+        el = 0
+        for e in b.elevators:  # Elevators
+            if b.elevators[el].status == 2:
+                continue
+            ele_time = e.time_travel(c)
+            if e.status == 2:
+                ele_time += e.delay
+            if ele_time < t:
+                t = e.time_travel(c)
+                eleid = index
+            index = index + 1
+            b.elevators[eleid].time_from_call = c.time
+            b.elevators[eleid].time_to_finish = float(c.time) + float(ele_time)
+            b.elevators[eleid].status = 2
+            Output(c.callID, eleid)
+            el += 1
 
-# def direction(id: int):
-#     call = Calls(id)
-#     x = call.destination - call.source
-#     if x < 0:
-#         return -1  # DOWN
-#     return 1  # UP
-#
-#
-# # check all calls
-# # UP = 1, DOWN = -1, equals = 0
-# def up_or_down(call: Calls):
-#     up = 0
-#     down = 0
-#     for i in call:
-#         if direction(call.callID) == 1:
-#             up += 1
-#         if direction(call.callID) == -1:
-#             down += 1
-#     if up > down:
-#         return 1
-#     if down < up:
-#         return -1
-#     return 0
-
-
-# def time_to_arrive(call: calls, ele: int):
-#     elev = Building['_elevators'][ele]
-#     e = Building.list[ele]
-#     if len(Elevator.list) > 0:
-#         elev
-#     dist = abs(e['floor'])  #need to get the distance from floor a to floor b
-#     a_to_b= elev._closeTime+ elev._openTime + elev._startTime + elev._stopTime +
+def check_ele(i):
+    e = 0
+    for j in b.elevators:
+        if i >= b.elevators[e].time_to_finish:
+            b.elevators[e].time_from_call = 0
+            b.elevators[e].time_to_finish = 0
+            b.elevators[e].status = 0
+        e += 1
 
 if __name__ == '__main__':
-    # numOfEle = len(Building['_elevators'])
-    # elevators = [numOfEle]
-    # for j in len(calls.r):
-    #     c = calls.r[j]
-    #     if numOfEle == 1:  # one elevator
-    #         ele = Building['_elevators'][0]
-    #         if direction(0) == 1:
-    #             ele.goto(c)
-    # pd.read_json("B5.json")
-    b = Building("B5.json")
-    # b.add_calls(0,1,123124)
-    # b.add_calls(0, 6, 235623)
-    Simulator.sim(s)
+    calls()
+

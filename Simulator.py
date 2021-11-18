@@ -106,16 +106,24 @@ def arr_move_down(ele: Elevator):
     ele.call_listDOWN.reverse()
 
 
-def pos(num: int):
+def pos(num: int, t):
     for i in range(num):
         ele = b.elevators[i]
+        ele.goto = t
+        print("pos: ", ele.position)
+        if len(ele.calls_l) > 0:
+            c = ele.calls_l
+
+            print(c[0].time, ele.eleid)
         if len(ele.call_listDOWN) == 0 and len(ele.temp_call_listDOWN) > 0:
             arr_move_down(ele)
         if len(ele.call_listUP) == 0 and len(ele.temp_call_listUP) > 0:
             arr_move_up(ele)
-        ele.set_position()
+        if int(ele.direction) == 1 or int(ele.direction) == -1:
+            ele.set_position()
         start_call(ele)
         write_call(ele)
+
 
 
 def start_call(ele: Elevator):
@@ -137,14 +145,17 @@ def write_call(ele: Elevator):
 
 def sim():
     numOfEle = len(b.elevators)
-    calls_time = 200
+    calls_time = float(Calls(Calls(0).length - 1).time) + 120
     i = 0
     ans = None
     for t in range(int(calls_time)):  # TIME
-
-        pos(numOfEle)  # set elevators position
+        # pos(numOfEle)  # set elevators position
         for j in range(Calls(0).length):  # Calls
+            pos(numOfEle, t)
             c = Calls(j)
+            if t < float(c.time) or int(c.status) != 0:
+                print(int(c.status))
+                break
             if numOfEle == 1:  # 1 Elevator
                 if t >= c.time:
                     one_ele(c)
@@ -155,8 +166,6 @@ def sim():
             p = 99999
             for e in range(numOfEle):  # Elevators
                 ele = b.elevators[e]
-                if t < float(c.time):
-                    break
                 if t >= float(c.time):
                     if int(ele.direction) == 0 and int(ele.position) == int(c.source):  # elev at the call floor and "rest mode"
                         add(c, ele)
@@ -182,10 +191,10 @@ def sim():
                         if time(ele, ele.call_listDOWN, c) < p:
                             p = time(ele, ele.call_listDOWN, c)
                             ans = ele
-                if ans != None:
-                    add(c, ans)
-                    ele.set_direction()
-            i += 1
+            if ans != None:
+                add(c, ans)
+                ele.set_direction()
+        i += 1
 
 
 if __name__ == '__main__':

@@ -1,11 +1,10 @@
 import csv
-from Elevator import Elevator
 
 
 class Calls:
-    def __init__(self, callID=0) -> None:
+    def __init__(self, file_name: str, callID=0) -> None:
         row = []
-        f = open("Calls_a.csv")
+        f = open(file_name)
         csv_reader = csv.reader(f)
         for line in csv_reader:
             row.append(line)
@@ -23,6 +22,13 @@ class Calls:
             self.direction = -1  # DOWN
         else:
             self.direction = 1  # UP
+
+    def get_distance(self):
+        x = abs(self.source - self.destination)
+        return x
+
+    def set_elevator(self,i):
+        self.elevator = i
     #
     # def set_direction(self):
     #     x = abs(int(self.destination) - int(self.source))

@@ -4,7 +4,7 @@ from Elevator import Elevator
 
 class Building:
     def __init__(self, file_name):
-        with open("B5.json", "r") as f:
+        with open(file_name, "r") as f:
             dict = json.load(f)
             self._minFloor = int(dict["_minFloor"])
             self._maxFloor = int(dict['_maxFloor'])
@@ -17,8 +17,8 @@ class Building:
             # self.list = Elevator.dict_list
 
 
-    def getstatus(eleid:int):
-        return Elevator.Elevator(eleid).status
+    def getstatus(self):
+        return self.elevators['_status']
     def getspeed(eleid: int):
         return Elevator.Elevator(eleid)['_speed']
     def getminfloor(eleid: int):
