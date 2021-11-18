@@ -52,14 +52,4 @@ def output(output_file_name: str, row: list, ele: int):
 
 
 if __name__ == '__main__':
-    # b = Building("B4.json")  # curr Building
-    # elevators = b.elevators  # Elevators in curr Building
-    # calls = Calls("Calls_a.csv").r
-    # calls.sort(key=lambda x: x[3])
-    #
-    # output("Calls_.csv", calls, 0)
-    # c_length = len(calls) - 1
-    # end_time = float(Calls("Calls_a.csv", c_length).time)
-    # length = len(calls)-1
-    # end_time = float(calls[length].time) + 120
-    algo("B1.json", "Calls_b.csv", "Calls_.csv")
+    algo("B4.json", "Calls_a.csv", "Calls_.csv")

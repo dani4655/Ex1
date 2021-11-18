@@ -27,12 +27,3 @@ class Calls:
         x = abs(self.source - self.destination)
         return x
 
-    def set_elevator(self,i):
-        self.elevator = i
-    #
-    # def set_direction(self):
-    #     x = abs(int(self.destination) - int(self.source))
-    #     if x < 0:
-    #         self.direction = -1  # DOWN
-    #     else:
-    #         self.direction = 1  # UP
